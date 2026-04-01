@@ -6,12 +6,12 @@ Score any Base builder in seconds across 4 dimensions: consistency, technical de
 
 **Endpoint:**
 ```
-GET https://x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c4c8f1bffe5/builder-score?handle=<x-handle>
+GET https://x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c8f1bffe5/builder-score?handle=<x-handle>
 ```
 
 - **Price:** $0.01 USDC/call
 - **Network:** Base
-- **Payment:** x402 — AI agents pay automatically, no API key needed
+- **Payment:** x402 — no API key needed
 - **Free tier:** First 1,000 requests/month free
 
 ---
@@ -29,7 +29,7 @@ GET https://x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c4c8f1bffe5/builder-
     "builderFocus": 25,
     "community": 25
   },
-  "summary": "Jesse is the architect and heartbeat of the Base ecosystem, relentlessly shipping and scaling the onchain future.",
+  "summary": "Jesse is the architect and heartbeat of the Base ecosystem.",
   "poweredBy": "Blue Agent / Blocky Studio",
   "timestamp": "2026-04-01T06:54:02.457Z"
 }
@@ -39,11 +39,16 @@ GET https://x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c4c8f1bffe5/builder-
 
 ## How to Use
 
-### Option 1 — AI Agent (Bankr)
+### Option 1 — CLI (quickest)
 
+```bash
+git clone https://github.com/madebyshun/builder-score-x402
+cd builder-score-x402
+npm install
+WALLET_PRIVATE_KEY=0x... node score.mjs jessepollak
 ```
-bankr prompt "score @jessepollak using the builder score API at x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c4c8f1bffe5/builder-score"
-```
+
+→ [github.com/madebyshun/builder-score-x402](https://github.com/madebyshun/builder-score-x402)
 
 ### Option 2 — TypeScript / JavaScript
 
@@ -62,18 +67,17 @@ const wallet = createWalletClient({ account, chain: base, transport: http() })
 const paidFetch = wrapFetchWithPayment(fetch, wallet)
 
 const res = await paidFetch(
-  'https://x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c4c8f1bffe5/builder-score?handle=jessepollak'
+  'https://x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c8f1bffe5/builder-score?handle=jessepollak'
 )
 const score = await res.json()
-console.log(score)
 // { handle, score, tier, dimensions, summary }
 ```
 
 ### Option 3 — curl (view 402 requirements)
 
 ```bash
-curl -i "https://x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c4c8f1bffe5/builder-score?handle=jessepollak"
-# → HTTP 402 Payment Required + payment requirements header
+curl -i "https://x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c8f1bffe5/builder-score?handle=jessepollak"
+# → HTTP 402 Payment Required + payment requirements
 ```
 
 ---
@@ -94,7 +98,7 @@ curl -i "https://x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c4c8f1bffe5/bui
 
 | Dimension | What it measures |
 |-----------|-----------------|
-| Consistency | Posting frequency, showing up daily, regularity |
+| Consistency | Posting frequency, showing up daily |
 | Technical | Code quality, smart contracts, technical depth |
 | Builder Focus | Projects shipped, onchain activity, building in public |
 | Community | Followers, engagement, recognition on X and Farcaster |
@@ -115,14 +119,12 @@ bankr x402 deploy
 
 ---
 
-## Revenue Dashboard
+## Revenue
 
 ```bash
 bankr x402 revenue builder-score
-# Last 7 days   1 reqs  $0.010000 earned
+# Last 7 days   2 reqs  $0.020000 earned
 ```
-
-Monitor at: [bankr.bot/x402](https://bankr.bot/x402)
 
 ---
 

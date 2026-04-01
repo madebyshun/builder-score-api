@@ -1,0 +1,42 @@
+{
+  "network": "base",
+  "currency": "USDC",
+  "services": {
+    "builder-score": {
+      "description": "AI-powered builder score for any X/Base handle. Returns 0-100 score across 4 dimensions: Consistency, Technical, Builder Focus, Community.",
+      "price": "0.001",
+      "methods": ["GET"],
+      "schema": {
+        "input": {
+          "type": "object",
+          "properties": {
+            "handle": {
+              "type": "string",
+              "description": "X/Twitter handle (with or without @)"
+            }
+          },
+          "required": ["handle"]
+        },
+        "output": {
+          "type": "object",
+          "properties": {
+            "handle": { "type": "string" },
+            "score": { "type": "number", "description": "0-100" },
+            "tier": { "type": "string", "description": "Explorer|Builder|Shipper|Founder|Legend" },
+            "dimensions": {
+              "type": "object",
+              "properties": {
+                "consistency":  { "type": "number", "description": "0-25" },
+                "technical":    { "type": "number", "description": "0-25" },
+                "builderFocus": { "type": "number", "description": "0-25" },
+                "community":    { "type": "number", "description": "0-25" }
+              }
+            },
+            "summary": { "type": "string" },
+            "timestamp": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,42 +1,27 @@
 {
-  "network": "base",
-  "currency": "USDC",
-  "services": {
-    "builder-score": {
-      "description": "AI-powered builder score for any X/Base handle. Returns 0-100 score across 4 dimensions: Consistency, Technical, Builder Focus, Community.",
-      "price": "0.01",
-      "methods": ["GET"],
-      "schema": {
-        "input": {
-          "type": "object",
-          "properties": {
-            "handle": {
-              "type": "string",
-              "description": "X/Twitter handle (with or without @)"
-            }
-          },
-          "required": ["handle"]
-        },
-        "output": {
-          "type": "object",
-          "properties": {
-            "handle": { "type": "string" },
-            "score": { "type": "number", "description": "0-100" },
-            "tier": { "type": "string", "description": "Explorer|Builder|Shipper|Founder|Legend" },
-            "dimensions": {
-              "type": "object",
-              "properties": {
-                "consistency":  { "type": "number", "description": "0-25" },
-                "technical":    { "type": "number", "description": "0-25" },
-                "builderFocus": { "type": "number", "description": "0-25" },
-                "community":    { "type": "number", "description": "0-25" }
-              }
-            },
-            "summary": { "type": "string" },
-            "timestamp": { "type": "string" }
-          }
+  "name": "Builder Score API",
+  "description": "Get AI-powered Builder Score for any Base builder. Costs 0.01 USDC per query.",
+  "version": "1.0.0",
+  "main": "x402/builder-score/index.mjs",
+  "payment": {
+    "amount": "0.01",
+    "token": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "tokenSymbol": "USDC",
+    "chainId": 8453
+  },
+  "endpoints": {
+    "/score": {
+      "method": "POST",
+      "description": "Get Builder Score by @handle",
+      "parameters": {
+        "handle": {
+          "type": "string",
+          "description": "Twitter/X handle (e.g. @madebyshun)",
+          "required": true
         }
       }
     }
-  }
+  },
+  "author": "@madebyshun",
+  "repository": "https://github.com/madebyshun/builder-score-api"
 }

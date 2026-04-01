@@ -1,60 +1,83 @@
-# Builder Score API 🟦
+# Builder Score 🟦
 
-> AI-powered builder score for any X/Base handle · Powered by Blue Agent · Blocky Studio
-
-Score any Base builder in seconds across 4 dimensions: consistency, technical depth, builder focus, and community presence.
-
-**Endpoint:**
-```
-GET https://x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c8f1bffe5/builder-score?handle=<x-handle>
-```
-
-- **Price:** $0.01 USDC/call
-- **Network:** Base
-- **Payment:** x402 — no API key needed
-- **Free tier:** First 1,000 requests/month free
+> Score any Base/crypto builder with AI · Powered by Blue Agent · Blocky Studio
 
 ---
 
-## Response
+## What is this?
 
-```json
-{
-  "handle": "jessepollak",
-  "score": 99,
-  "tier": "Legend",
-  "dimensions": {
-    "consistency": 25,
-    "technical": 24,
-    "builderFocus": 25,
-    "community": 25
-  },
-  "summary": "Jesse is the architect and heartbeat of the Base ecosystem.",
-  "poweredBy": "Blue Agent / Blocky Studio",
-  "timestamp": "2026-04-01T06:54:02.457Z"
-}
+2 things in 1 repo:
+
+**1. API** — live on Bankr x402 Cloud
+```
+GET https://x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c8f1bffe5/builder-score?handle=jessepollak
+→ costs $0.01 USDC · paid automatically onchain
+```
+
+**2. CLI** — run it from your terminal
+```bash
+node score.mjs jessepollak
+→ pays $0.01 USDC → returns score
 ```
 
 ---
 
-## How to Use
+## Quick Start (CLI)
 
-### Option 1 — CLI (quickest)
+**Requirements:** Node.js 18+ · EVM wallet with USDC on Base
 
 ```bash
-git clone https://github.com/madebyshun/builder-score-x402
-cd builder-score-x402
+git clone https://github.com/madebyshun/builder-score-api
+cd builder-score-api
 npm install
 WALLET_PRIVATE_KEY=0x... node score.mjs jessepollak
 ```
 
-→ [github.com/madebyshun/builder-score-x402](https://github.com/madebyshun/builder-score-x402)
-
-### Option 2 — TypeScript / JavaScript
-
-```bash
-npm install x402-fetch viem
+**Output:**
 ```
+🟦 Builder Score — @jessepollak
+────────────────────────────────────────
+Score:  99/100  🏆
+Tier:   Legend
+────────────────────────────────────────
+Consistency:   25/25
+Technical:     24/25
+Builder Focus: 25/25
+Community:     25/25
+────────────────────────────────────────
+💡 Jesse is the architect and heartbeat of the Base ecosystem.
+
+Powered by Blue Agent 🟦 · $0.01 USDC/call
+```
+
+---
+
+## How it works
+
+```
+node score.mjs jessepollak
+       │
+       ▼
+GET /builder-score?handle=jessepollak
+       │
+       ▼
+← HTTP 402 · need $0.01 USDC
+       │
+       ▼
+x402-fetch signs payment onchain (Base)
+       │
+       ▼
+← HTTP 200 · JSON score result
+       │
+       ▼
+Print to terminal
+```
+
+**No API key. No signup. Just USDC on Base.**
+
+---
+
+## Integrate in your app
 
 ```typescript
 import { wrapFetchWithPayment } from 'x402-fetch'
@@ -73,14 +96,25 @@ const score = await res.json()
 // { handle, score, tier, dimensions, summary }
 ```
 
-### Option 3 — curl (view 402 requirements)
-
-```bash
-curl -i "https://x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c8f1bffe5/builder-score?handle=jessepollak"
-# → HTTP 402 Payment Required + payment requirements
-```
-
 ---
+
+## Response
+
+```json
+{
+  "handle": "jessepollak",
+  "score": 99,
+  "tier": "Legend",
+  "dimensions": {
+    "consistency": 25,
+    "technical": 24,
+    "builderFocus": 25,
+    "community": 25
+  },
+  "summary": "Jesse is the architect and heartbeat of the Base ecosystem.",
+  "timestamp": "2026-04-01T06:54:02.457Z"
+}
+```
 
 ## Tiers
 
@@ -94,36 +128,13 @@ curl -i "https://x402.bankr.bot/0xf31f59e7b8b58555f7871f71973a394c8f1bffe5/build
 
 ---
 
-## Scoring Dimensions (4 × 25 = 100)
-
-| Dimension | What it measures |
-|-----------|-----------------|
-| Consistency | Posting frequency, showing up daily |
-| Technical | Code quality, smart contracts, technical depth |
-| Builder Focus | Projects shipped, onchain activity, building in public |
-| Community | Followers, engagement, recognition on X and Farcaster |
-
----
-
-## Deploy Your Own
+## Deploy your own
 
 ```bash
 npm i -g @bankr/cli
 bankr login
-bankr x402 init
-bankr x402 add builder-score
 bankr x402 env set BANKR_API_KEY=bk_xxx
-bankr x402 configure builder-score
-bankr x402 deploy
-```
-
----
-
-## Revenue
-
-```bash
-bankr x402 revenue builder-score
-# Last 7 days   2 reqs  $0.020000 earned
+bankr x402 deploy builder-score
 ```
 
 ---
@@ -132,4 +143,4 @@ bankr x402 revenue builder-score
 
 [Blue Agent](https://t.me/blockyagent_bot) · [Blocky Studio](https://x.com/blockyonbase)
 
-$BLUEAGENT · Base · Powered by Bankr x402 Cloud
+$BLUEAGENT · Base · Bankr x402 Cloud

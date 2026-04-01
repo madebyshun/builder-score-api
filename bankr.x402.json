@@ -4,7 +4,7 @@
   "services": {
     "builder-score": {
       "description": "AI-powered builder score for any X/Base handle. Returns 0-100 score across 4 dimensions: Consistency, Technical, Builder Focus, Community.",
-      "price": "0.001",
+      "price": "0.01",
       "methods": ["GET"],
       "schema": {
         "input": {
